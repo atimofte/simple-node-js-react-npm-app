@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'npm i --no-bin-links || npm i --no-bin-links --save-dev'
+        sh 'npm i --no-bin-links --save-dev || npm i --no-bin-links --save-dev'
       }
     }
     stage('Test') {
