@@ -11,7 +11,6 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                sh 'npm install ajv'
                 sh 'npm install' 
             }
         }
