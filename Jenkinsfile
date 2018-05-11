@@ -1,36 +1,32 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:6-alpine'
-      args '-p 3000:3000'
+    agent {
+        docker {
+            image 'node:6-alpine' 
+            args '-p 3000:3000' 
+        }
     }
-
-  }
-  stages {
-    stage('Build') {
-      steps {
-        sh 'npm cache clean'
-        sh 'npm i --no-bin-links --save'
-      }
+    environment {
+        CI = 'true'
     }
-   stage('Test') {
-    {
+    stages {
+        stage('Build') { 
+            steps {
+                sh 'npm cache clean'
+                sh 'npm install --no-bin-links --save' 
+            }
+        }
+        stage('Test') {
             steps {
                 sh 'npm install react-scripts -g'
                 sh 'npm install --no-bin-links --save'
                 sh './jenkins/scripts/test.sh'
             }
         }
-   }
-    stage('Deliver') {
-      steps {
+		stage('Deliver') {
+			steps {
         sh './jenkins/scripts/deliver.sh'
         input 'Finished using the web site? (Click "Proceed" to continue)'
         sh './jenkins/scripts/kill.sh'
       }
     }
-  }
-  environment {
-    CI = 'true'
-  }
 }
