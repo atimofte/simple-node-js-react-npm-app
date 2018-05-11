@@ -11,11 +11,14 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                sh 'npm install' 
+                sh 'npm cache clean'
+                sh 'npm install --no-bin-links --save' 
             }
         }
         stage('Test') {
             steps {
+                sh 'npm install react-scripts -g'
+                sh 'npm install --no-bin-links --save'
                 sh './jenkins/scripts/test.sh'
             }
         }
