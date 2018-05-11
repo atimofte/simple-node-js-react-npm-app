@@ -9,14 +9,17 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'npm i --no-bin-links flag'
+        sh 'npm i --no-bin-links --save'
       }
     }
    stage('Test') {
-    steps {
-      sh './jenkins/scripts/test.sh'     
-	  }
-   }
+    {
+            steps {
+                sh 'npm install react-scripts -g'
+                sh 'npm install --no-bin-links --save'
+                sh './jenkins/scripts/test.sh'
+            }
+        }
     stage('Deliver') {
       steps {
         sh './jenkins/scripts/deliver.sh'
