@@ -12,7 +12,7 @@ pipeline {
         stage('Build') { 
             steps {
                 sh 'npm cache clean'
-                sh 'npm install --no-bin-links --save' 
+                sh 'npm install --no-bin-links --save || npm install --no-bin-links --save' 
             }
         }
         stage('Test') {
