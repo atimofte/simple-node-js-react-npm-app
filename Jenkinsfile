@@ -17,22 +17,6 @@ pipeline {
         sh './jenkins/scripts/test.sh'
       }
     }
-    stage('build && SonarQube analysis') {
-      steps {
-        withMaven(maven: 'Maven 3.5') {
-          sh 'mvn clean package sonar:sonar'
-        }
-
-      }
-    }
-    stage('Quality Gate') {
-      steps {
-        timeout(time: 1, unit: 'HOURS') {
-          waitForQualityGate true
-        }
-
-      }
-    }
     stage('Deliver') {
       steps {
         sh './jenkins/scripts/deliver.sh'
